@@ -1,22 +1,15 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import {useState} from 'react'
+import {useRouter} from 'next/navigation'
+import {zodResolver} from "@hookform/resolvers/zod"
+import {useForm} from "react-hook-form"
 import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Loader2 } from 'lucide-react'
+import {Button} from "@/components/ui/button"
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
+import {Input} from "@/components/ui/input"
+import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
+import {Loader2} from 'lucide-react'
 import {createClient} from "@/utils/supabase/client";
 
 const formSchema = z.object({
@@ -47,7 +40,7 @@ export function LoginForm() {
         setIsLoading(true)
         setError(null)
 
-        const { error } = await supabase.auth.signInWithPassword({
+        const {error} = await supabase.auth.signInWithPassword({
             email: values.email,
             password: values.password,
         })
@@ -72,26 +65,26 @@ export function LoginForm() {
                             <FormField
                                 control={form.control}
                                 name="email"
-                                render={({ field }) => (
+                                render={({field}) => (
                                     <FormItem>
                                         <FormLabel>Email</FormLabel>
                                         <FormControl>
                                             <Input placeholder="Enter your email" {...field} />
                                         </FormControl>
-                                        <FormMessage />
+                                        <FormMessage/>
                                     </FormItem>
                                 )}
                             />
                             <FormField
                                 control={form.control}
                                 name="password"
-                                render={({ field }) => (
+                                render={({field}) => (
                                     <FormItem>
                                         <FormLabel>Password</FormLabel>
                                         <FormControl>
                                             <Input type="password" placeholder="Enter your password" {...field} />
                                         </FormControl>
-                                        <FormMessage />
+                                        <FormMessage/>
                                     </FormItem>
                                 )}
                             />
@@ -99,7 +92,7 @@ export function LoginForm() {
                             <Button type="submit" className="w-full" disabled={isLoading}>
                                 {isLoading ? (
                                     <>
-                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
                                         Logging in...
                                     </>
                                 ) : (
@@ -111,8 +104,8 @@ export function LoginForm() {
                 </CardContent>
                 <CardFooter>
                     <p className="text-sm text-gray-500">
-                        Demo Credentials:<br />
-                        Email: data@table.org <br />
+                        Demo Credentials:<br/>
+                        Email: data@table.org <br/>
                         Password: serverside
                     </p>
                 </CardFooter>
