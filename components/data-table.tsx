@@ -35,6 +35,7 @@ export function DataTable() {
         fetchData(pageIndex, pageSize, filters)
     }, [fetchData, pageIndex, pageSize, filters])
 
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     const globalFilterFn: FilterFn<any> = useCallback(
         (row, columnId, filterValue) => {
             const value = row.getValue(columnId)
