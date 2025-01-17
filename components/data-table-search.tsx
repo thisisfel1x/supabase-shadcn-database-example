@@ -6,7 +6,19 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {Badge} from "@/components/ui/badge"
 import {Calendar} from "@/components/ui/calendar"
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip"
-import {ArrowLeft, ArrowRight, Building, CalendarIcon, ChevronDown, Equal, Filter, Space, User, X} from 'lucide-react'
+import {
+    ArrowLeft,
+    ArrowRight,
+    Building,
+    CalendarIcon,
+    ChevronDown, ChevronLeft,
+    ChevronRight,
+    Equal,
+    Filter,
+    Space,
+    User,
+    X
+} from 'lucide-react'
 import {format} from "date-fns"
 
 export type FilterType = {
@@ -34,6 +46,11 @@ const operatorOptions = {
         {value: "equals", label: "Equals", icon: Equal},
         {value: "before", label: "Before", icon: ArrowLeft},
         {value: "after", label: "After", icon: ArrowRight},
+    ],
+    numeric: [
+        {value: "equals", label: "Equals", icon: Equal},
+        {value: "greaterThan", label: "Greater than", icon: ChevronRight},
+        {value: "lessThan", label: "Less than", icon: ChevronLeft},
     ],
 }
 
@@ -108,7 +125,12 @@ export default function DataTableSearch({onFiltersChange}: DataTableSearchProps)
                             </Select>
                             <div className="flex gap-2">
                                 <TooltipProvider>
-                                    {(currentFilter.field === "date" ? operatorOptions.date : operatorOptions.default).map((op) => (
+                                    {(currentFilter.field === "date"
+                                            ? operatorOptions.date
+                                            : currentFilter.field === "age"
+                                                ? operatorOptions.numeric
+                                                : operatorOptions.default
+                                    ).map((op) => (
                                         <Tooltip key={op.value}>
                                             <TooltipTrigger asChild>
                                                 <Button
@@ -157,6 +179,14 @@ export default function DataTableSearch({onFiltersChange}: DataTableSearchProps)
                                         />
                                     </PopoverContent>
                                 </Popover>
+                            ) : currentFilter.field === "age" ? (
+                                <Input
+                                    type="number"
+                                    placeholder="Enter age"
+                                    value={currentFilter.value}
+                                    onChange={(e) => setCurrentFilter({...currentFilter, value: e.target.value})}
+                                    className="h-8"
+                                />
                             ) : (
                                 <Input
                                     placeholder="Add value"
@@ -176,7 +206,7 @@ export default function DataTableSearch({onFiltersChange}: DataTableSearchProps)
                 <Badge key={filter.id} variant="secondary" className="text-sm">
                     {filterFields.find(f => f.value === filter.field)?.label}
                     {' '}
-                    {operatorOptions.default.concat(operatorOptions.date).find(op => op.value === filter.operator)?.label}
+                    {operatorOptions.default.concat(operatorOptions.date).concat(operatorOptions.numeric).find(op => op.value === filter.operator)?.label}
                     {' '}
                     {filter.value}
                     <Button
@@ -193,4 +223,3 @@ export default function DataTableSearch({onFiltersChange}: DataTableSearchProps)
         </div>
     )
 }
-
