@@ -38,6 +38,12 @@ export async function fetchDataForTableView(options: {
             case "after":
                 query = query.gt(filter.field, filter.value)
                 break
+            case "greaterThan":
+                query = query.gt(filter.field, filter.value)
+                break
+            case "lessThan":
+                query = query.lt(filter.field, filter.value)
+                break
         }
     })
 
